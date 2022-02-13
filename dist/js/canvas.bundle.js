@@ -246,15 +246,6 @@ function createImage(imgSrc) {
 }
 
 var platformImage = createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
-var genericObjs = [new GenericObj({
-  x: -1,
-  y: -1,
-  image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
-}), new GenericObj({
-  x: -1,
-  y: -1,
-  image: createImage(_img_hills_png__WEBPACK_IMPORTED_MODULE_2__["default"])
-})];
 var player = new Player();
 var platforms = [new Platform({
   x: -1,
@@ -269,6 +260,15 @@ var platforms = [new Platform({
   y: 250,
   image: platformImage
 })];
+var genericObjs = [new GenericObj({
+  x: -1,
+  y: -1,
+  image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+}), new GenericObj({
+  x: -1,
+  y: -1,
+  image: createImage(_img_hills_png__WEBPACK_IMPORTED_MODULE_2__["default"])
+})];
 var keys = {
   right: {
     pressed: false
@@ -277,6 +277,33 @@ var keys = {
     pressed: false
   }
 };
+
+function init() {
+  platformImage = createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  player = new Player();
+  platforms = [new Platform({
+    x: -1,
+    y: 250,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width - 5,
+    y: 250,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width * 2.2,
+    y: 250,
+    image: platformImage
+  })];
+  genericObjs = [new GenericObj({
+    x: -1,
+    y: -1,
+    image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+  }), new GenericObj({
+    x: -1,
+    y: -1,
+    image: createImage(_img_hills_png__WEBPACK_IMPORTED_MODULE_2__["default"])
+  })];
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -323,8 +350,9 @@ function animate() {
     console.log("You win!");
   }
 
-  if (player.position.y > canvas.height) {
+  if (player.position.y > canvas.height + 400) {
     console.log("You lose");
+    init();
   }
 }
 

@@ -72,9 +72,20 @@ function createImage(imgSrc) {
   return image;
 }
 
-const platformImage = createImage(platform);
+let platformImage = createImage(platform);
 
-const genericObjs = [
+let player = new Player();
+let platforms = [
+  new Platform({ x: -1, y: 250, image: platformImage }),
+  new Platform({ x: platformImage.width - 5, y: 250, image: platformImage }),
+  new Platform({
+    x: platformImage.width * 2.2,
+    y: 250,
+    image: platformImage,
+  }),
+];
+
+let genericObjs = [
   new GenericObj({
     x: -1,
     y: -1,
@@ -87,17 +98,6 @@ const genericObjs = [
   }),
 ];
 
-const player = new Player();
-const platforms = [
-  new Platform({ x: -1, y: 250, image: platformImage }),
-  new Platform({ x: platformImage.width - 5, y: 250, image: platformImage }),
-  new Platform({
-    x: platformImage.width * 2.2,
-    y: 250,
-    image: platformImage,
-  }),
-];
-
 const keys = {
   right: {
     pressed: false,
@@ -106,6 +106,34 @@ const keys = {
     pressed: false,
   },
 };
+
+function init() {
+  platformImage = createImage(platform);
+
+  player = new Player();
+  platforms = [
+    new Platform({ x: -1, y: 250, image: platformImage }),
+    new Platform({ x: platformImage.width - 5, y: 250, image: platformImage }),
+    new Platform({
+      x: platformImage.width * 2.2,
+      y: 250,
+      image: platformImage,
+    }),
+  ];
+
+  genericObjs = [
+    new GenericObj({
+      x: -1,
+      y: -1,
+      image: createImage(background),
+    }),
+    new GenericObj({
+      x: -1,
+      y: -1,
+      image: createImage(hills),
+    }),
+  ];
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -161,8 +189,9 @@ function animate() {
     console.log("You win!");
   }
 
-  if (player.position.y > canvas.height) {
+  if (player.position.y > canvas.height + 400) {
     console.log("You lose");
+    init();
   }
 }
 animate();
